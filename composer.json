@@ -1,18 +1,18 @@
 {
-    "name": "kucha/ueditor",
+    "name": "xiaozhuangyuan/ueditor",
     "description": "desc",
-    "license": "MIT",
+    "license": "Apache",
     "authors": [
         {
-            "name": "BigKuCha",
-            "email": "nevermore1989@vip.qq.com"
+            "name": "xiaozhuangyuan",
+            "email": "gochuangmeng@163.com"
         }
     ],
     "minimum-stability": "stable",
     "require": {},
     "autoload": {
         "psr-4": {
-            "kucha\\ueditor\\": ""
+            "xiaozhuangyuan\\ueditor\\": ""
         }
     }
 }

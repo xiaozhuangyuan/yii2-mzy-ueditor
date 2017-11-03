@@ -1,5 +1,5 @@
 <?php
-namespace kucha\ueditor;
+namespace xiaozhuangyuan\ueditor;
 
 
 class Uploader

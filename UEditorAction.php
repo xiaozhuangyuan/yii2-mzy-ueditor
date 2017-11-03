@@ -1,6 +1,6 @@
 <?php
 
-namespace kucha\ueditor;
+namespace xiaozhuangyuan\ueditor;
 
 use Yii;
 use yii\base\Action;
