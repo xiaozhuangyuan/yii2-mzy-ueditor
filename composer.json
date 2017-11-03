@@ -1,6 +1,8 @@
 {
     "name": "zhuangyuan/ueditor",
     "description": "desc",
+    "keywords": ["yii", "oss", "ueditor"],
+    "type": "yii2-extension",
     "license": "MIT",
     "authors": [
         {
