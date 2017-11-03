@@ -1,6 +1,6 @@
 <?php
 
-namespace xiaozhuangyuan\ueditor;
+namespace zhuangyuan\ueditor;
 
 use Yii;
 use yii\base\Action;

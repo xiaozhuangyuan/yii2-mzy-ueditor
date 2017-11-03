@@ -1,5 +1,5 @@
 <?php
-namespace xiaozhuangyuan\ueditor;
+namespace zhuangyuan\ueditor;
 
 
 use yii\web\AssetBundle;

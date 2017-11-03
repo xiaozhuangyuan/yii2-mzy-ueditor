@@ -1,5 +1,5 @@
 <?php
-namespace xiaozhuangyuan\ueditor;
+namespace zhuangyuan\ueditor;
 
 
 class Uploader
