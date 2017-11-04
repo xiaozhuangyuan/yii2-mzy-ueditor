@@ -1,6 +1,9 @@
 <?php
+
 namespace zhuangyuan\ueditor;
 
+
+use backend\controllers\core\QiniuController;
 
 class Uploader
 {
@@ -22,19 +25,19 @@ class Uploader
         "文件未被完整上传",
         "没有文件被上传",
         "上传文件为空",
-        "ERROR_TMP_FILE"           => "临时文件错误",
+        "ERROR_TMP_FILE" => "临时文件错误",
         "ERROR_TMP_FILE_NOT_FOUND" => "找不到临时文件",
-        "ERROR_SIZE_EXCEED"        => "文件大小超出网站限制",
-        "ERROR_TYPE_NOT_ALLOWED"   => "文件类型不允许",
-        "ERROR_CREATE_DIR"         => "目录创建失败",
-        "ERROR_DIR_NOT_WRITEABLE"  => "目录没有写权限",
-        "ERROR_FILE_MOVE"          => "文件保存时出错",
-        "ERROR_FILE_NOT_FOUND"     => "找不到上传文件",
-        "ERROR_WRITE_CONTENT"      => "写入文件内容错误",
-        "ERROR_UNKNOWN"            => "未知错误",
-        "ERROR_DEAD_LINK"          => "链接不可用",
-        "ERROR_HTTP_LINK"          => "链接不是http链接",
-        "ERROR_HTTP_CONTENTTYPE"   => "链接contentType不正确"
+        "ERROR_SIZE_EXCEED" => "文件大小超出网站限制",
+        "ERROR_TYPE_NOT_ALLOWED" => "文件类型不允许",
+        "ERROR_CREATE_DIR" => "目录创建失败",
+        "ERROR_DIR_NOT_WRITEABLE" => "目录没有写权限",
+        "ERROR_FILE_MOVE" => "文件保存时出错",
+        "ERROR_FILE_NOT_FOUND" => "找不到上传文件",
+        "ERROR_WRITE_CONTENT" => "写入文件内容错误",
+        "ERROR_UNKNOWN" => "未知错误",
+        "ERROR_DEAD_LINK" => "链接不可用",
+        "ERROR_HTTP_LINK" => "链接不是http链接",
+        "ERROR_HTTP_CONTENTTYPE" => "链接contentType不正确"
     );
 
     /**
@@ -108,12 +111,24 @@ class Uploader
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return;
         }
-        //移动文件
-        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
-            $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
-        } else { //移动成功
-            $this->stateInfo = $this->stateMap[0];
+
+        //oss
+        if (true) {
+            if ($res = (new QiniuController())->qiniu_file_upload($file["tmp_name"], 'onescrn-news-md5cover',$this->fileName)) {
+//                echo $res[0]['key'];exit;
+                $this->stateInfo = $this->stateMap[0];
+            } else {
+                $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
+            }
+        } else {
+            //移动文件
+            if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
+                $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
+            } else { //移动成功
+                $this->stateInfo = $this->stateMap[0];
+            }
         }
+
     }
 
     /**
@@ -318,7 +333,7 @@ class Uploader
      * 文件大小检测
      * @return bool
      */
-    private function  checkSize()
+    private function checkSize()
     {
         return $this->fileSize <= ($this->config["maxSize"]);
     }
@@ -330,12 +345,12 @@ class Uploader
     public function getFileInfo()
     {
         return array(
-            "state"    => $this->stateInfo,
-            "url"      => $this->fullName,
-            "title"    => $this->fileName,
+            "state" => $this->stateInfo,
+            "url" => $this->fullName,
+            "title" => $this->fileName,
             "original" => $this->oriName,
-            "type"     => $this->fileType,
-            "size"     => $this->fileSize
+            "type" => $this->fileType,
+            "size" => $this->fileSize
         );
     }
 }
